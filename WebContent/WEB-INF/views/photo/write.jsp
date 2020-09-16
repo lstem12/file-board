@@ -13,5 +13,6 @@
 	사진 : <input type="file" name="pbFile"><br>
 	<button>글쓰기</button>
 </form>
+<h3>${msg}</h3>
 </body>
 </html>
