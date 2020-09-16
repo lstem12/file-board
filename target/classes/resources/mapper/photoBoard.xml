@@ -13,12 +13,8 @@
     <if test="pbPhotoPath != null">pb_photo_path,</if> 
     pb_content,credat, cretim)
     values(seq_pb_num.nextval, #{pbTitle}, #{pbContent},
-    <if test="pbPhotoName != null">
-    	#{pbPhotoName},
-    </if>
-    <if test="pbPhotoPath != null">
-    	#{pbPhotoPath},
-    </if>
+    <if test="pbPhotoName != null">#{pbPhotoName},</if>
+    <if test="pbPhotoPath != null">#{pbPhotoPath},</if>
     TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
   </insert>
   
