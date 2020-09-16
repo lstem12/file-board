@@ -8,8 +8,18 @@
 	</sql> -->
 	
   <insert id="insertPhotoBoard" parameterType="com.file.board.vo.PhotoBoardVO">
-    insert into photo_board(pb_num, pb_title, pb_content,credat, cretim)
-    values(seq_pb_num.nextval, #{pbTitle}, #{pbContent}, TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
+    insert into photo_board(pb_num, pb_title,
+    <if test="pbPhotoName != null">pb_photo_name,</if>
+    <if test="pbPhotoPath != null">pb_photo_path,</if> 
+    pb_content,credat, cretim)
+    values(seq_pb_num.nextval, #{pbTitle}, #{pbContent},
+    <if test="pbPhotoName != null">
+    	#{pbPhotoName},
+    </if>
+    <if test="pbPhotoPath != null">
+    	#{pbPhotoPath},
+    </if>
+    TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
   </insert>
   
 </mapper>
