@@ -8,6 +8,6 @@
 </head>
 <body>
 <div>파일 업로드 프로젝트</div>
-<a href="/photo/list2">게시판가기</a>
+<a href="/photo/list">게시판가기</a>
 </body>
 </html>

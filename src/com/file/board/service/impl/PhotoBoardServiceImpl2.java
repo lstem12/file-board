@@ -11,8 +11,6 @@ public class PhotoBoardServiceImpl2 implements PhotoBoardService2 {
 
 	@Override
 	public int insertPhotoBoard2(PhotoBoardVO pb, MultipartFile file) {
-		System.out.println(file.getOriginalFilename());
-		System.out.println(pb);
 		return 0;
 	}
 
