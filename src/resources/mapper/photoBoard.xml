@@ -9,8 +9,7 @@
 	
   <insert id="insertPhotoBoard" parameterType="com.file.board.vo.PhotoBoardVO">
     insert into photo_board(pb_num, pb_title, pb_content, pb_photo_name, pb_photo_path, credat, cretim)
-    values(seq_pb_num.nextval, #{pbTitle}, #{pbContent}, #{pbPhoto}, #{pbPhotoPath}, 
-    TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
+    values(seq_pb_num.nextval, #{pbTitle}, #{pbContent}, #{pbPhotoName}, #{pbPhotoPath},TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
   </insert>
   
 </mapper>
