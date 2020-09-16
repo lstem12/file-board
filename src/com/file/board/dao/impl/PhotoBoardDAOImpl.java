@@ -17,7 +17,9 @@ public class PhotoBoardDAOImpl implements PhotoBoardDAO {
 
 	@Override
 	public int insertPhotoBoard(PhotoBoardVO pb, MultipartFile file) {
+		
 		try(SqlSession ss = ssf.openSession()){
+			System.out.println(pb);
 			return ss.insert("PhotoBoard.insertPhotoBoard",pb);
 		}
 	}
