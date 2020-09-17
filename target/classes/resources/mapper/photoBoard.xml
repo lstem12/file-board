@@ -8,14 +8,27 @@
 	</sql> -->
 	
   <insert id="insertPhotoBoard" parameterType="com.file.board.vo.PhotoBoardVO">
-    insert into photo_board(pb_num, pb_title,
+    insert into photo_board(pb_num, pb_title, pb_content,
     <if test="pbPhotoName != null">pb_photo_name,</if>
     <if test="pbPhotoPath != null">pb_photo_path,</if> 
-    pb_content,credat, cretim)
+    credat, cretim)
     values(seq_pb_num.nextval, #{pbTitle}, #{pbContent},
     <if test="pbPhotoName != null">#{pbPhotoName},</if>
     <if test="pbPhotoPath != null">#{pbPhotoPath},</if>
     TO_CHAR(sysdate, 'YYYYMMDD'), TO_CHAR(sysdate, 'HH24MISS'))
   </insert>
+  <select id="selectPhotoBoardList" resultType="pb">
+select * from
+(select rownum as cnt, pb.*
+	from (select pb_num, pb_title, pb_content, pb_photo_name, 
+	pb_photo_path, credat, cretim
+	from photo_board
+	order by pb_num desc) pb
+	where rownum &lt;=#{page.endNum})
+	where cnt &gt;=#{page.startNum}
+  </select>
   
+  <select id="selectPhotoBoardCount" resultType="int">
+  		select count(1) from photo_board
+  </select>
 </mapper>

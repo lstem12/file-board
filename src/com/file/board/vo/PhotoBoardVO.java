@@ -11,4 +11,5 @@ public class PhotoBoardVO {
 	private String pbPhotoPath;
 	private String credat;
 	private String cretim;
+	private PageVO page;
 }
