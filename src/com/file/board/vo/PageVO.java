@@ -7,7 +7,7 @@ public class PageVO {
 	private int pageNum;
 	private int startNum;
 	private int endNum;
-	private int totalCnt;
 	private int startBlock;
 	private int endBlock;
+	private int totalPageSize;
 }

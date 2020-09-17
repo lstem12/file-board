@@ -47,8 +47,11 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 		page.setStartNum(startNum);
 		page.setEndNum(endNum);
 		int totalCnt = pbdao.selectPhotoBoardCount(pb);
-		page.setTotalCnt(totalCnt);
 		int totalPageSize = totalCnt/10;
+		if(totalCnt % 10 != 0) {
+			totalPageSize += 1;
+		}
+		page.setTotalPageSize(totalPageSize);
 		int startBlock = (page.getPageNum()-1)/10 * 10 + 1;
 		int endBlock = startBlock + (10-1);
 		if(endBlock>totalPageSize) {
