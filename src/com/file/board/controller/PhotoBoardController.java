@@ -27,10 +27,18 @@ public class PhotoBoardController {
 		pbService.selectPhotoBoardList(pb,model);
 		return "photo/list";
 	}
+	@RequestMapping(value="/photo/view",method=RequestMethod.GET)
+	public String goView(@ModelAttribute PhotoBoardVO pb, Model model) {
+		int pbNum = pb.getPbNum();
+		model.addAttribute("pbView",pbService.selectPhotoBoard(pbNum));
+		return "photo/view";
+	}
+	
 	@RequestMapping(value="/photo/write",method=RequestMethod.GET)
 	public String goWrite() {
 		return "photo/write";
 	}
+	
 	@RequestMapping(value="/photo/write",method=RequestMethod.POST)
 	public String doWrite(@ModelAttribute PhotoBoardVO pb, @RequestParam("pbFile") MultipartFile file, Model model) {
 		if(pbService.insertPhotoBoard(pb, file) == 1) {
@@ -40,6 +48,22 @@ public class PhotoBoardController {
 			model.addAttribute("msg", "글 작성 실패");
 		}
 		return "photo/write";
+	}
+	@RequestMapping(value="/photo/update",method=RequestMethod.POST)
+	public String doUpdate(@ModelAttribute PhotoBoardVO pb, @RequestParam("pbFile") MultipartFile file, Model model) {
+		if(pbService.updatePhotoBoard(pb, file) == 1) {
+			model.addAttribute("msg", "글 수정 성공");
+			return "redirect:/photo/list";
+		}else {
+			model.addAttribute("msg", "글 수정 실패");
+		}
+		return "photo/write";
+	}
+	
+	@RequestMapping(value="/photo/delete",method=RequestMethod.POST)
+	public String deletePhotoBoards(@RequestParam("pbNums")int[] pbNums) {
+		pbService.deletePhotoBoards(pbNums);
+		return "redirect:/photo/list?page.pageNum=1";
 	}
 
 }

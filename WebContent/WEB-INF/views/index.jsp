@@ -8,7 +8,6 @@
 </head>
 <body>
 <div>파일 업로드 프로젝트</div>
-<img src="/resources/1.jpg" width="100px"><br>
 <a href="/photo/list">게시판가기</a>
 </body>
 </html>

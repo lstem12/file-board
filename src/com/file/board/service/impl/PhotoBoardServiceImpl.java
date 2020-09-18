@@ -16,7 +16,7 @@ import com.file.board.vo.PhotoBoardVO;
 
 @Service
 public class PhotoBoardServiceImpl implements PhotoBoardService {
-	private final String uploadPath = "C:\\Users\\Administrator\\eclipse-workspace\\file-board\\WebContent\\resources\\";
+	private final String uploadPath = "C:\\Users\\Administrator\\git\\file-board\\WebContent\\resources\\";
 	@Autowired
 	private PhotoBoardDAO pbdao;
 	@Override
@@ -64,6 +64,60 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
 		model.addAttribute("pbList", pbdao.selectPhotoBoardList(pb));
 		
 		return null;
+	}
+	@Override
+	public int deletePhotoBoards(int[] pbNums) {
+		List<PhotoBoardVO> pbList = pbdao.selectPhotoBoardsForDelete(pbNums);
+		if(!pbList.isEmpty()) {
+			for(PhotoBoardVO pb : pbList) {
+				String fileNme = pb.getPbPhotoPath();
+				File f = new File(uploadPath + fileNme);
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+		}
+		return pbdao.deletePhotoBoards(pbNums);
+	}
+	@Override
+	public PhotoBoardVO selectPhotoBoard(int pbNum) {
+		return pbdao.selectPhotoBoard(pbNum);
+	}
+	@Override
+	public int updatePhotoBoard(PhotoBoardVO pb, MultipartFile file) {
+		if(pb.getPbPhotoPath() == null) {
+			String orgFileName = file.getOriginalFilename();
+			String extName = orgFileName.substring(orgFileName.lastIndexOf("."));
+			String fileName = System.nanoTime() + extName;
+			pb.setPbPhotoName(orgFileName);
+			pb.setPbPhotoPath(fileName);
+			int cnt = pbdao.updatePhotoBoard(pb, file);
+			if(cnt == 1) {
+				File f = new File(uploadPath + fileName);
+				try {
+					file.transferTo(f);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			return cnt;
+		}
+		if(pb.getPbPhotoPath() != null) {
+			int cnt = pbdao.updatePhotoBoard(pb, file);
+			if(cnt == 1) {
+				File f = new File(uploadPath + pb.getPbPhotoPath());
+				try {
+					file.transferTo(f);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return 0;
 	}
 
 }

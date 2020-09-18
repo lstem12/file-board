@@ -1,8 +1,6 @@
 package com.file.board.dao.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -43,6 +41,39 @@ public class PhotoBoardDAOImpl implements PhotoBoardDAO {
 	public int selectPhotoBoardCount(PhotoBoardVO pb) {
 		try(SqlSession ss = ssf.openSession()){
 			return ss.selectOne("PhotoBoard.selectPhotoBoardCount", pb);
+		}
+	}
+
+	@Override
+	public int deletePhotoBoards(int[] pbNums) {
+		try(SqlSession ss = ssf.openSession()){
+			int cnt = 0;
+			for(int pbNum:pbNums) {
+				cnt += ss.delete("PhotoBoard.deletePhotoBoard",pbNum);
+			}
+			return cnt;
+		}
+	}
+
+	@Override
+	public List<PhotoBoardVO> selectPhotoBoardsForDelete(int[] pbNums) {
+		try(SqlSession ss = ssf.openSession()){
+			return ss.selectList("PhotoBoard.selectPhotoBoardsForDelete", pbNums);
+		}
+	}
+
+	@Override
+	public PhotoBoardVO selectPhotoBoard(int pbNum) {
+		try(SqlSession ss = ssf.openSession()){
+			return ss.selectOne("PhotoBoard.selectPhotoBoard", pbNum);
+		}
+	}
+	
+	@Override
+	public int updatePhotoBoard(PhotoBoardVO pb, MultipartFile file) {
+		try(SqlSession ss = ssf.openSession()){
+			System.out.println(pb);
+			return ss.update("PhotoBoard.updatePhotoBoard", pb);
 		}
 	}
 }
