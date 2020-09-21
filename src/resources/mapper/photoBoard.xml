@@ -61,7 +61,7 @@
 
 	<delete id="deletePhotoBoard">
 		delete from photo_board
-		where pb_num = ${pbNum}
+		where pb_num = #{pbNum}
 	</delete>
 
 	<select id="selectPhotoBoardsForDelete" resultType="pb">
